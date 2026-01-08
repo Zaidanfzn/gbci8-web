@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calculator, Info, Activity, Trees, Search, ChevronRight, Layers, Database, FileCheck, ExternalLink } from 'lucide-react';
 
 // --- DATASET LENGKAP BPS JAWA BARAT (Estimasi Produksi Padi 2024) ---
@@ -200,7 +200,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans overflow-hidden relative">
+    // UBAH: Menggunakan h-screen w-full untuk memastikan pas 1 layar penuh (1920x1080) tanpa scroll body
+    <div className="h-screen w-full bg-slate-50 flex flex-col font-sans overflow-hidden relative">
       
       <style>{`
         @keyframes swing {
@@ -255,7 +256,8 @@ export default function App() {
       )}
 
       {/* --- BARIS 1: PETA INTERAKTIF (LEAFLET) --- */}
-      <div className="h-[55vh] relative shadow-xl z-10 border-b border-slate-300">
+      {/* UBAH: h-[50vh] agar seimbang dengan area data di layar 1080p */}
+      <div className="h-[50vh] flex-shrink-0 relative shadow-xl z-10 border-b border-slate-300">
         <div className="absolute top-4 left-4 z-[400] bg-white/95 backdrop-blur px-5 py-3 rounded-lg shadow-lg border-l-4 border-green-600">
            <h1 className="text-xl font-bold text-slate-800 flex items-center gap-2">
              <Trees className="text-green-600" /> Peta Lumbung Padi Jabar (BPS)
@@ -272,10 +274,11 @@ export default function App() {
       </div>
 
       {/* --- BARIS 2: KONTROL & DATA --- */}
-      <div className="flex-1 bg-white grid grid-cols-1 lg:grid-cols-2 gap-0 overflow-y-auto">
+      {/* UBAH: min-h-0 dan h-full pada child agar scroll independen (Split Pane Layout) */}
+      <div className="flex-1 min-h-0 bg-white grid grid-cols-1 lg:grid-cols-2 gap-0">
         
-        {/* KOLOM 1: Input & Random Forest Result */}
-        <div className="p-6 bg-slate-50 border-r border-slate-200 overflow-y-auto">
+        {/* KOLOM 1: Input & Random Forest Result (Scrollable Independen) */}
+        <div className="p-6 bg-slate-50 border-r border-slate-200 overflow-y-auto h-full">
           <div className="flex items-center gap-2 mb-4 text-slate-700">
             <Calculator className="text-emerald-600" />
             <h2 className="text-xl font-bold">Simulasi Prediksi (Random Forest)</h2>
@@ -347,8 +350,8 @@ export default function App() {
           </div>
         </div>
 
-        {/* KOLOM 2: Tabel Referensi */}
-        <div className="p-6 bg-white overflow-y-auto">
+        {/* KOLOM 2: Tabel Referensi (Scrollable Independen) */}
+        <div className="p-6 bg-white overflow-y-auto h-full">
           <div className="flex justify-between items-center mb-4">
              <h3 className="font-bold text-slate-700 text-lg flex items-center gap-2">
                <Activity className="text-blue-500" /> Data Referensi
@@ -419,7 +422,7 @@ export default function App() {
       </div>
 
       {/* --- FOOTER --- */}
-      <footer className="bg-slate-900 text-slate-400 py-3 text-center text-xs font-mono border-t border-slate-800 z-50">
+      <footer className="bg-slate-900 text-slate-400 py-3 text-center text-xs font-mono border-t border-slate-800 z-50 flex-shrink-0">
         Kelompok 8 - GBCI copyright 2025
       </footer>
 
